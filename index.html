@@ -37,9 +37,22 @@
     .archive-list{list-style:none;display:grid;gap:10px}
     .archive-link{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:4px;text-decoration:none;background:rgba(255,255,255,.02);transition:border-color .2s,transform .2s}
     .archive-link:hover{border-color:rgba(59,130,246,.45);transform:translateY(-1px)}
+    .archive-link.latest{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.04)}
+    .archive-link.latest:hover{border-color:rgba(239,68,68,.6)}
     .archive-date{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.08em;text-transform:uppercase;font-weight:600}
     .archive-label{font-size:13px;color:var(--text-dim)}
-    .pill{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:600;padding:2px 7px;border-radius:2px;text-transform:uppercase;letter-spacing:.06em;color:var(--green);background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3)}
+    .archive-meta{font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:2px}
+    .pill{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:600;padding:2px 7px;border-radius:2px;text-transform:uppercase;letter-spacing:.06em}
+    .pill-green{color:var(--green);background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3)}
+    .pill-red{color:var(--red);background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3)}
+    .pill-amber{color:var(--amber);background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3)}
+
+    .alert{display:flex;align-items:flex-start;gap:12px;border-radius:4px;padding:12px 16px;margin-bottom:16px}
+    .alert-icon{font-size:18px;flex-shrink:0}
+    .alert-text{font-family:var(--mono);font-size:11px;line-height:1.6;color:#fca5a5}
+    .alert-text strong{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px;color:var(--red)}
+    .al-crit{background:linear-gradient(135deg,rgba(239,68,68,.08),rgba(249,115,22,.05));border:1px solid rgba(239,68,68,.3);border-left:4px solid var(--red);animation:pulseR 2.5s ease-in-out infinite}
+    @keyframes pulseR{0%,100%{border-left-color:var(--red)}50%{border-left-color:var(--orange)}}
 
     footer{border-top:1px solid var(--border);padding:20px 0 0;margin-top:60px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
     .ft-l{font-size:11px;color:var(--text-muted)}
@@ -55,8 +68,17 @@
         <span class="badge b-v2">Cote-d'Or · Bourgogne</span>
       </div>
       <div class="hdr-title">Meteo Insight<br>Accueil officiel</div>
-      <div class="hdr-sub">Analyses meteo locales, mises a jour regulierement.</div>
+      <div class="hdr-sub">Analyses meteo locales, mises a jour regulierement · Sources : Keraunos · Météo-France · GFS · AROME</div>
     </header>
+
+    <!-- ALERTE ACTIVE -->
+    <div class="alert al-crit">
+      <div class="alert-icon">🔴</div>
+      <div class="alert-text">
+        <strong>Vigilance active — Dimanche 10 mai 2026</strong>
+        Vigilance orange orages Météo-France sur 8 départements du Sud-Ouest · Risque 3/5 Keraunos Occitanie · CIS 0–6 km 44,3 m/s détecté pour le mardi 12 mai — voir bulletin complet.
+      </div>
+    </div>
 
     <section class="section">
       <div class="sec-hdr">
@@ -65,22 +87,38 @@
       </div>
       <div class="archive-box">
         <ul class="archive-list">
+
+          <!-- BULLETIN 10 MAI — DERNIER EN DATE -->
+          <li>
+            <a class="archive-link latest" href="./2026-05-10.html">
+              <div>
+                <div class="archive-date">10 mai 2026 — Dernier bulletin</div>
+                <div class="archive-label">Situation pluvio-orageuse · Vigilance orange SW · Signal CIS 0–6km 44,3 m/s mardi 12 mai</div>
+                <div class="archive-meta">GFS 00Z + AROME 3Z + Keraunos J & J1–J6 + Météo-France · Fenêtre 10–14 mai</div>
+              </div>
+              <span class="pill pill-red">⚠ Actif</span>
+            </a>
+          </li>
+
+          <!-- BULLETIN 5 MAI -->
           <li>
             <a class="archive-link" href="./2026-05-05.html">
               <div>
                 <div class="archive-date">5 mai 2026</div>
-                <div class="archive-label">Situation pluvio-orageuse, bulletin du 5 mai</div>
+                <div class="archive-label">Situation pluvio-orageuse · Bulletin du 5 mai · V2 mise à jour 08h</div>
+                <div class="archive-meta">GFS 00Z + AROME 0Z + Keraunos J · Fenêtre 5–10 mai</div>
               </div>
-              <span class="pill">Disponible</span>
+              <span class="pill pill-green">Archive</span>
             </a>
           </li>
+
         </ul>
       </div>
     </section>
 
     <footer>
-      <div class="ft-l">Meteo Insight - Bulletin meteo amateur</div>
-      <div class="ft-r">Derniere mise a jour: 5 mai 2026</div>
+      <div class="ft-l">Meteo Insight — Bulletin meteo amateur · Sources officielles : Keraunos · Météo-France · NCEP/NOAA · Meteociel</div>
+      <div class="ft-r">Derniere mise a jour : 10 mai 2026<br>Cote-d'Or (21) · 47°N / 4–5°E</div>
     </footer>
   </div>
 </body>
