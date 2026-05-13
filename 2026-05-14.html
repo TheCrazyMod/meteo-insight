@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meteo Insight | Bulletin du 13 mai 2026</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='50' x='10' font-size='48'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a0f1e;--bg2:#0e1528;--card:#111827;--border:#1e2d4a;
+  --blue:#3b82f6;--cyan:#06b6d4;--teal:#14b8a6;
+  --amber:#f59e0b;--orange:#f97316;--red:#ef4444;--green:#22c55e;--purple:#a855f7;
+  --text:#e2e8f0;--text-dim:#94a3b8;--text-muted:#64748b;
+  --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(59,130,246,.03)1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.03)1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 24px 80px}
+
+/* HEADER */
+header{padding:48px 0 32px;border-bottom:1px solid var(--border);margin-bottom:40px}
+.hdr-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.badge{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.12em;padding:4px 10px;border-radius:2px;text-transform:uppercase}
+.b-src{color:var(--cyan);background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3)}
+.b-run{color:var(--text-dim);background:rgba(255,255,255,.04);border:1px solid var(--border)}
+.b-v2{color:var(--teal);background:rgba(20,184,166,.12);border:1px solid rgba(20,184,166,.4)}
+.hdr-title{font-size:clamp(26px,5vw,50px);font-weight:700;letter-spacing:-.02em;line-height:1.1;background:linear-gradient(135deg,#e2e8f0 0%,#60a5fa 60%,#06b6d4 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.hdr-sub{font-size:15px;color:var(--text-dim);font-weight:300}
+
+/* BANNIERES */
+.alert{display:flex;align-items:flex-start;gap:14px;border-radius:4px;padding:14px 18px;margin-bottom:14px}
+.alert-icon{font-size:20px;flex-shrink:0;margin-top:2px}
+.alert-text{font-family:var(--mono);font-size:12px;line-height:1.6}
+.alert-text strong{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
+.al-warn{background:linear-gradient(135deg,rgba(249,115,22,.08),rgba(245,158,11,.06));border:1px solid rgba(249,115,22,.3);border-left:4px solid var(--orange)}
+.al-warn .alert-text{color:#fed7aa} .al-warn .alert-text strong{color:var(--orange)}
+.al-crit{background:linear-gradient(135deg,rgba(239,68,68,.12),rgba(249,115,22,.08));border:1px solid rgba(239,68,68,.4);border-left:4px solid var(--red);animation:pulseR 2.5s ease-in-out infinite}
+.al-crit .alert-text{color:#fca5a5} .al-crit .alert-text strong{color:var(--red)}
+.al-info{background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-left:4px solid var(--blue)}
+.al-info .alert-text{color:var(--text-dim)} .al-info .alert-text strong{color:var(--blue)}
+.al-green{background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.2);border-left:4px solid var(--green)}
+.al-green .alert-text{color:#bbf7d0} .al-green .alert-text strong{color:var(--green)}
+.al-teal{background:rgba(20,184,166,.05);border:1px solid rgba(20,184,166,.2);border-left:4px solid var(--teal)}
+.al-teal .alert-text{color:#99f6e4} .al-teal .alert-text strong{color:var(--teal)}
+@keyframes pulseR{0%,100%{border-left-color:var(--red)}50%{border-left-color:var(--orange)}}
+
+/* OVERVIEW CARDS */
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:48px}
+.ov-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:18px 14px;position:relative;overflow:hidden;transition:border-color .2s}
+.ov-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.ov-card:hover{border-color:rgba(59,130,246,.3)}
+.c-today::after{background:var(--orange)} .c-j1::after{background:var(--amber)} .c-j2::after{background:var(--teal)} .c-j3::after{background:var(--green)} .c-j4::after{background:var(--green)}
+.ov-ech{font-family:var(--mono);font-size:9px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.ov-day{font-size:13px;font-weight:600;margin-bottom:10px}
+.ov-val{font-family:var(--mono);font-size:20px;font-weight:600;margin-bottom:3px}
+.ov-sub{font-size:10px;color:var(--text-muted);margin-bottom:10px}
+.c-today .ov-val{color:var(--orange)} .c-j1 .ov-val{color:var(--amber)} .c-j2 .ov-val{color:var(--teal)} .c-j3 .ov-val{color:var(--green)} .c-j4 .ov-val{color:var(--green)}
+.pill{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:600;padding:2px 7px;border-radius:2px;text-transform:uppercase;letter-spacing:.06em}
+.c-today .pill{color:var(--orange);background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3)}
+.c-j1 .pill{color:var(--amber);background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3)}
+.c-j2 .pill{color:var(--teal);background:rgba(20,184,166,.12);border:1px solid rgba(20,184,166,.3)}
+.c-j3 .pill{color:var(--green);background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3)}
+.c-j4 .pill{color:var(--green);background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3)}
+
+/* BULLETIN OFFICIEL BOX */
+.bulletin-box{background:var(--bg2);border:1px solid rgba(59,130,246,.25);border-radius:6px;padding:24px;margin:24px 0}
+.bul-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.bul-logo{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--blue);background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);padding:4px 10px;border-radius:2px}
+.bul-logo-mf{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--cyan);background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);padding:4px 10px;border-radius:2px}
+.bul-logo-estofex{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--orange);background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);padding:4px 10px;border-radius:2px}
+.bul-title{font-weight:700;font-size:15px;color:var(--text)}
+.bul-date{font-family:var(--mono);font-size:11px;color:var(--text-muted)}
+
+/* SECTIONS */
+.section{margin-bottom:60px}
+.sec-hdr{display:flex;align-items:baseline;gap:14px;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--blue);opacity:.7;letter-spacing:.1em}
+.sec-title{font-size:clamp(17px,3vw,24px);font-weight:700;letter-spacing:-.01em;flex:1}
+.sec-date{font-family:var(--mono);font-size:11px;color:var(--text-muted)}
+.rb{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;font-weight:600;padding:7px 13px;border-radius:3px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:18px}
+.rb-ok{background:rgba(34,197,94,.08);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+.rb-mod{background:rgba(245,158,11,.08);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
+.rb-high{background:rgba(249,115,22,.08);color:var(--orange);border:1px solid rgba(249,115,22,.3)}
+.rb-crit{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.4);animation:pulseR 2.5s ease-in-out infinite}
+.rb-teal{background:rgba(20,184,166,.08);color:var(--teal);border:1px solid rgba(20,184,166,.3)}
+
+/* PARAMS */
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px;margin-bottom:18px}
+.pc{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:4px;padding:13px 15px}
+.pc-l{font-family:var(--mono);font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.pc-v{font-family:var(--mono);font-size:20px;font-weight:600}
+.pc-u{font-size:11px;color:var(--text-dim);margin-left:3px}
+.pc-s{font-size:10px;color:var(--text-muted);margin-top:3px}
+.vg{color:var(--green)} .va{color:var(--amber)} .vo{color:var(--orange)} .vr{color:var(--red)} .vb{color:var(--blue)} .vp{color:var(--purple)} .vc{color:var(--cyan)} .vt{color:var(--teal)}
+
+/* BADGES */
+.new-badge{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:600;color:var(--cyan);background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);padding:2px 7px;border-radius:2px;text-transform:uppercase;letter-spacing:.08em;margin-left:8px;vertical-align:middle}
+
+/* TEXTE */
+.atxt{color:var(--text-dim);font-size:14px;line-height:1.75;margin-bottom:16px}
+.atxt strong{color:var(--text);font-weight:600}
+.sub-title{font-size:15px;font-weight:600;color:var(--blue);margin:20px 0 10px;border-left:3px solid var(--blue);padding-left:12px}
+
+/* CARTES */
+.map-block{margin:18px 0;border:1px solid var(--border);border-radius:6px;overflow:hidden;background:var(--bg2)}
+.map-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 15px;background:rgba(255,255,255,.02);border-bottom:1px solid var(--border);flex-wrap:wrap;gap:6px}
+.map-model{font-family:var(--mono);font-size:9px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:.08em}
+.map-model-ecmwf{font-family:var(--mono);font-size:9px;font-weight:600;color:var(--purple);text-transform:uppercase;letter-spacing:.08em}
+.map-model-arome{font-family:var(--mono);font-size:9px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:.08em}
+.map-ech{font-family:var(--mono);font-size:9px;color:var(--text-muted)}
+.map-block img{width:100%;display:block}
+.map-cap{padding:9px 15px;font-size:11px;color:var(--text-muted);font-style:italic;border-top:1px solid var(--border)}
+.maps-duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+.maps-trio{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:18px 0}
+@media(max-width:800px){.maps-trio{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){.maps-duo,.maps-trio{grid-template-columns:1fr}}
+
+/* TABLEAU */
+.tbl-wrap{overflow-x:auto;margin:20px 0;border-radius:6px;border:1px solid var(--border)}
+.rtable{width:100%;border-collapse:collapse;font-size:12px}
+.rtable thead tr{background:linear-gradient(90deg,#1a2f50,#152840)}
+.rtable th{padding:11px 12px;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);text-align:left;border-bottom:1px solid var(--border)}
+.rtable td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text-dim)}
+.rtable tbody tr:last-child td{border-bottom:none}
+.rtable tbody tr:nth-child(even) td{background:rgba(255,255,255,.015)}
+.rtable tbody tr:hover td{background:rgba(59,130,246,.05)}
+.td-r{font-family:var(--mono);font-size:10px;font-weight:600;padding:2px 6px;border-radius:2px}
+.td-ok{color:var(--green);background:rgba(34,197,94,.1)} .td-mod{color:var(--amber);background:rgba(245,158,11,.1)}
+.td-high{color:var(--orange);background:rgba(249,115,22,.1)} .td-crit{color:var(--red);background:rgba(239,68,68,.1)} .td-ten{color:var(--teal);background:rgba(20,184,166,.1)}
+
+/* SOURCES */
+.src-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:18px}
+.src-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:14px;display:flex;gap:10px}
+.src-icon{font-size:18px;flex-shrink:0;margin-top:2px}
+.src-name{font-weight:600;font-size:13px;margin-bottom:3px}
+.src-desc{font-size:11px;color:var(--text-muted);line-height:1.5}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:20px 0 0;margin-top:60px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.ft-l{font-size:11px;color:var(--text-muted)}
+.ft-r{font-family:var(--mono);font-size:9px;color:var(--text-muted);text-align:right}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div style="margin: 18px 0 6px;">
+  <a href="./index.html" style="font-family:var(--mono);font-size:11px;color:var(--cyan);text-decoration:none;border:1px solid var(--border);padding:6px 10px;border-radius:3px;display:inline-block;">
+    ← Retour à l'index
+  </a>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr-top">
+    <span class="badge b-src">GFS 12Z · ECMWF 12Z · AROME 15Z</span>
+    <span class="badge b-run">Run 13/05/2026 12Z · Keraunos · ESTOFEX · Météo-France</span>
+    <span class="badge b-v2">Convection de masse d'air froid</span>
+  </div>
+  <div class="hdr-title">Rapport Météorologique<br>Côte-d'Or &amp; Bourgogne</div>
+  <div class="hdr-sub">Traîne froide active · Jeudi 14 au samedi 16 mai 2026 · Établi le mercredi 13 mai 2026</div>
+</header>
+
+<!-- ALERTES -->
+<div class="alert al-warn" style="margin-bottom:10px">
+  <div class="alert-icon">❄</div>
+  <div class="alert-text"><strong>Convection de masse d'air froid — Jeudi 14 mai</strong>
+    T850 hPa ~0°C sur la Côte-d'Or · MUCAPE 1225 J/kg (−5,1 K MULI) · Averses orageuses avec grésil probable l'après-midi (quart NE) · Neige à partir de 1200m sur le Jura · T max 11–16°C · Vent O 50 km/h dans les terres. Keraunos : régime de traîne généralisé.
+  </div>
+</div>
+<div class="alert al-info" style="margin-bottom:10px">
+  <div class="alert-icon">🌩</div>
+  <div class="alert-text"><strong>ESTOFEX — Valide Jeu 14/05 06Z → Ven 15/05 06Z · Émis 12/05 19:55Z</strong>
+    Zone lightning (>15% foudre) : France entière incluse. Niveau 2 (>15% sévère) sur NW Italie/Côte d'Azur. Niveau 1 sur N Espagne et N Italie. Côte-d'Or : zone lightning uniquement — convection agile de masse d'air froid confirmée.
+  </div>
+</div>
+<div class="alert al-teal" style="margin-bottom:10px">
+  <div class="alert-icon">🌬</div>
+  <div class="alert-text"><strong>Vendredi 15 mai — Transition vers l'accalmie</strong>
+    MUCAPE chute à 534 J/kg · T850 remonte légèrement · T2m nuit 4–6°C en Côte-d'Or · Résidus d'averses mais convection en régression rapide. Accalmie progressive.
+  </div>
+</div>
+<div class="alert al-green">
+  <div class="alert-icon">✅</div>
+  <div class="alert-text"><strong>Samedi–Dimanche — Fin du régime perturbé · Source Keraunos</strong>
+    Samedi : thalweg évacue par l'est · Résidus convectifs extrême SE + Corse uniquement · Côte-d'Or épargnée. Dimanche : circulation plus océanique · Aucun risque convectif significatif identifié.
+  </div>
+</div>
+
+<!-- OVERVIEW CARDS -->
+<div class="ov-grid" style="margin-top:32px">
+  <div class="ov-card c-today">
+    <div class="ov-ech">J · Demain</div>
+    <div class="ov-day">Jeu. 14 mai</div>
+    <div class="ov-val">1225</div>
+    <div class="ov-sub">J/kg · MULI −5,1 K · T850 ~0°C</div>
+    <span class="pill">Averses orageuses / Grésil</span>
+  </div>
+  <div class="ov-card c-j1">
+    <div class="ov-ech">J+1</div>
+    <div class="ov-day">Ven. 15 mai</div>
+    <div class="ov-val">534</div>
+    <div class="ov-sub">J/kg · MULI −1,2 K · T2m 4–6°C nuit</div>
+    <span class="pill">Residuel · Accalmie</span>
+  </div>
+  <div class="ov-card c-j2">
+    <div class="ov-ech">J+2</div>
+    <div class="ov-day">Sam. 16 mai</div>
+    <div class="ov-val">—</div>
+    <div class="ov-sub">Thalweg évacue par l'est · SE/Corse</div>
+    <span class="pill">Calme · C.-d'Or épargnée</span>
+  </div>
+  <div class="ov-card c-j3">
+    <div class="ov-ech">J+3</div>
+    <div class="ov-day">Dim. 17 mai</div>
+    <div class="ov-val">—</div>
+    <div class="ov-sub">Circulation océanique · Pas de risque</div>
+    <span class="pill">Accalmie confirmée</span>
+  </div>
+</div>
+
+<!-- SECTION 00 : BULLETINS OFFICIELS -->
+<div class="section">
+  <div class="sec-hdr">
+    <span class="sec-num">00 /</span>
+    <span class="sec-title">Bulletins officiels — Mercredi 13 mai 2026</span>
+    <span class="sec-date">08h–20h loc.</span>
+  </div>
+
+  <!-- KERAUNOS J+1→J+6 -->
+  <div class="bulletin-box">
+    <div class="bul-header">
+      <span class="bul-logo">⚡ KERAUNOS S.A.S.</span>
+      <div>
+        <div class="bul-title">Bulletin J+1→J+6 · 14–20 mai 2026</div>
+        <div class="bul-date">Émis le 13/05/2026 à 08h00 LOC · Validité JEU 14 MAI 08h → MER 20 MAI 08h</div>
+      </div>
+    </div>
+    <p class="atxt"><strong>Titre de la séquence : « Convection de masse d'air froid »</strong></p>
+    <p class="atxt"><strong>Jeudi 14 mai :</strong> La descente d'air froid en altitude gagne tout le pays avec un <strong>régime de traîne qui tend à se généraliser</strong>. Des averses orageuses localisées seront possibles, surtout sur <strong>le nord et le nord-est</strong> — ce qui inclut directement la Côte-d'Or et la Bourgogne.</p>
+    <p class="atxt"><strong>Samedi 16 mai :</strong> Le thalweg d'altitude évacue notre pays par l'est. Des résidus convectifs seront encore observés entre <strong>l'extrême sud-est et la Corse</strong> uniquement.</p>
+    <p class="atxt"><strong>Dimanche 17 mai :</strong> L'air froid en altitude s'évacue durant le week-end au profit d'une <strong>circulation plus océanique</strong>. Il n'est pas identifié de risque convectif significatif.</p>
+  </div>
+
+  <!-- METEO-FRANCE -->
+  <div class="bulletin-box" style="margin-top:16px;border-color:rgba(6,182,212,.25)">
+    <div class="bul-header">
+      <span class="bul-logo-mf">🇫🇷 MÉTÉO-FRANCE</span>
+      <div>
+        <div class="bul-title">Prévision nationale — Jeudi 14 mai 2026</div>
+        <div class="bul-date">Source : météo.fr · Bulletin brut officiel</div>
+      </div>
+    </div>
+    <p class="atxt"><strong>Ambiance générale :</strong> Giboulées quasi généralisées dans une <strong>ambiance bien fraîche pour la saison</strong>. Des Pyrénées à l'Auvergne-Rhône-Alpes et à la Franche-Comté, le temps est pluvieux le matin. Plus au nord, éclaircies et averses alternent avec un <strong>vent de nord-ouest sensible</strong>.</p>
+    <p class="atxt"><strong>L'après-midi :</strong> Hormis autour du golfe du Lion (sec et venté), partout ailleurs les averses se multiplient et s'intensifient. Sur le <strong>quart nord-est, elles prennent un caractère orageux et sont accompagnées de grésil</strong>. Neige : dès 1100m sur les Vosges, 1200m sur le Jura, 1300m sur les Alpes et le Massif central.</p>
+    <p class="atxt"><strong>Vent :</strong> Vent d'ouest sensible avec des <strong>rafales atteignant 70 km/h en bord de mer, 50 km/h dans les terres</strong>. Tramontane 60–80 km/h.</p>
+    <p class="atxt"><strong>Températures :</strong> Minimales 4–5°C NE, 9–10°C SW. <strong>Maximales 11–16°C</strong> du nord au sud (hors Méditerranée). Valeurs très en dessous des normales saisonnières pour la mi-mai.</p>
+  </div>
+
+  <!-- ESTOFEX -->
+  <div class="bulletin-box" style="margin-top:16px;border-color:rgba(249,115,22,.25)">
+    <div class="bul-header">
+      <span class="bul-logo-estofex">⛈ ESTOFEX</span>
+      <div>
+        <div class="bul-title">Extended Forecast · Jeu 14 mai 06Z → Ven 15 mai 06Z</div>
+        <div class="bul-date">Émis le 12/05/2026 à 19:55 UTC · Forecaster : TUSCHY</div>
+      </div>
+    </div>
+    <p class="atxt"><strong>Analyse de grande échelle :</strong> « Un <strong>gyre cyclonique profond</strong> est placé au-dessus de l'Europe centro-nord, qui dirige de nombreuses ondes à faible amplitude vers l'Europe de l'ouest, du sud et de l'est. Ce schéma advecte une <strong>masse d'air froide et plutôt sèche</strong> vers l'Europe centrale/est, bien que les niveaux moyens/supérieurs froids favorisent toujours une <strong>activité convective agile</strong>. Au-dessus de l'Europe du Sud, un régime d'écoulement moyen/supérieur à l'ouest reprend une masse d'air marine depuis la Méditerranée, offrant des probabilités augmentées pour une DMC organisée. »</p>
+    <p class="atxt"><strong>Niveaux de risque :</strong> Niveau 2 (>15% sévère) sur le NW Italie (Piémont/Ligurie/Côte d'Azur). Niveau 1 (>5% sévère) sur le nord de l'Espagne et le nord de l'Italie. <strong>Zone lightning (>15% foudre) : couvre la France entière</strong>, les Îles Britanniques et l'Europe centrale. La Côte-d'Or est dans cette zone lightning — convection agile de masse d'air froid avec risque de foudre significatif.</p>
+  </div>
+</div>
+
+<!-- SECTION 01 : JEUDI 14 MAI — ANALYSE PRINCIPALE -->
+<div class="section">
+  <div class="sec-hdr">
+    <span class="sec-num">01 /</span>
+    <span class="sec-title">Jeudi 14 mai — Traîne froide généralisée</span>
+    <span class="sec-date">J · Fiabilité : Excellente</span>
+  </div>
+  <div class="rb rb-high">❄ Risque : Averses orageuses / Grésil (quart NE) — Keraunos : Traîne | Fiabilité : Excellente</div>
+
+  <div class="pg">
+    <div class="pc"><div class="pc-l">MUCAPE max run</div><div class="pc-v vo">1225<span class="pc-u">J/kg</span></div><div class="pc-s">MULI min −5,1 K (!)</div></div>
+    <div class="pc"><div class="pc-l">MUCAPE Côte-d'Or</div><div class="pc-v va">300–600<span class="pc-u">J/kg</span></div><div class="pc-s">Teintes vert-jaune</div></div>
+    <div class="pc"><div class="pc-l">T850 hPa C.-d'Or</div><div class="pc-v vb">~0<span class="pc-u">°C</span></div><div class="pc-s">Masse d'air froid intense</div></div>
+    <div class="pc"><div class="pc-l">CIS 0–6 km</div><div class="pc-v va">22–26<span class="pc-u">m/s</span></div><div class="pc-s">Multicellules / Grésil</div></div>
+    <div class="pc"><div class="pc-l">T max Côte-d'Or</div><div class="pc-v vb">11–14<span class="pc-u">°C</span></div><div class="pc-s">Très en dessous normale</div></div>
+    <div class="pc"><div class="pc-l">ESTOFEX</div><div class="pc-v va" style="font-size:14px">Lightning</div><div class="pc-s">>15% foudre · France entière</div></div>
+  </div>
+
+  <div class="sub-title">Analyse synoptique — Masse d'air froid profonde</div>
+  <p class="atxt">La situation du jeudi 14 mai est caractérisée par l'installation d'un <strong>régime de traîne généralisé</strong> sur la France. La carte ECMWF Z500/Pression sol à 11h locales montre un creusement dépressionnaire marqué sur le nord de la France et le Bénélux (998–1000 hPa), avec des isobares serrées traduisant un <strong>flux d'ouest-nord-ouest rapide</strong>. Le géopotentiel Z500 effondré (teintes bleu profond, ~504–510 dam) sur le nord-est confirme une <strong>anomalie froide en altitude exceptionnellement marquée</strong> pour la mi-mai.</p>
+  <p class="atxt">ESTOFEX décrit précisément ce mécanisme : un <strong>gyre cyclonique profond</strong> positionné sur l'Europe centro-nord dirige des ondes successives à faible amplitude sur la France. L'air froid en altitude descend bien en dessous des normales saisonnières, créant un lapse rate (gradient thermique vertical) très élevé qui favorise la <strong>convection de masse d'air froid</strong> — des cellules convectives agiles, peu prévisibles individuellement, mais réparties sur l'ensemble du territoire.</p>
+
+  <div class="maps-duo">
+    <div class="map-block">
+      <div class="map-hdr"><span class="map-model-ecmwf">ECMWF 0.25° 12Z · Meteociel</span><span class="map-ech">Jeu. 14 mai 2026 · 11h locale (+21h) · Z500 + Pression sol</span></div>
+      <img src="images/2026_05_14/ecmwffr-0-21.png" alt="ECMWF Z500 Pression sol Jeudi 14 mai 11h">
+      <div class="map-cap">Fig. 1 — Z500 (dam, couleur) + Pression sol (isobares) · Dépression 998 hPa N-France · Flux WNW rapide · Teintes bleu = géopot. très bas · Run 12Z 13/05 · Source : Meteociel/ECMWF</div>
+    </div>
+    <div class="map-block">
+      <div class="map-hdr"><span class="map-model-ecmwf">ECMWF 0.25° 12Z · Meteociel</span><span class="map-ech">Ven. 15 mai 2026 · 05h locale (+39h) · Z500 + Pression sol</span></div>
+      <img src="images/2026_05_14/ecmwffr-0-39.png" alt="ECMWF Z500 Pression sol Vendredi 15 mai 05h">
+      <div class="map-cap">Fig. 2 — Persistance du régime de traîne · Creusement secondaire sur Manche · Z500 encore froid sur la France · Run 12Z 13/05 · Source : Meteociel/ECMWF</div>
+    </div>
+  </div>
+
+  <div class="sub-title">GFS 12Z — MUCAPE/MULI à 15Z : instabilité de masse d'air froid</div>
+  <p class="atxt">La carte GFS valable jeudi 14 mai à 15Z présente un profil d'instabilité inhabituel pour ce type de situation. Le MUCAPE atteint <strong>1225 J/kg</strong> en valeur maximale avec un MULI à <strong>−5,1 K</strong> — la valeur la plus négative (la plus déstabilisante) observée sur l'ensemble de la séquence depuis le 5 mai. Ce paradoxe apparent s'explique par la nature même de la masse d'air froid : en altitude, les températures sont très basses (~0°C à 850 hPa), créant un <strong>lapse rate élevé</strong> entre le bas et le haut de la troposphère, même si l'énergie convective absolue reste modérée comparée à une situation d'été. Sur la Côte-d'Or, le MUCAPE est estimé à <strong>300–600 J/kg</strong> (teintes vert-jaune clair sur le département).</p>
+  <p class="atxt">Le maximum de MUCAPE (teintes vert-jaune vif, ~800–1225 J/kg) est concentré sur le <strong>flanc sud-est</strong> — Alpes du Sud, Côte d'Azur, nord de l'Italie — ce qui correspond directement aux niveaux 1 et 2 ESTOFEX et à la zone où la masse d'air marine méditerranéenne est reprise par le flux d'altitude, amplifiant fortement l'instabilité. Les contours bleus du MULI englobent la Bourgogne, confirmant une instabilité réelle bien que modérée sur le département.</p>
+
+  <div class="map-block">
+    <div class="map-hdr"><span class="map-model">GFS HiRes 0.25° 12Z · Keraunos</span><span class="map-ech">Jeu. 14 mai 2026 · 15Z · MUCAPE/MULI</span></div>
+    <img src="images/2026_05_14/MUCAPE_MULI_27.png" alt="MUCAPE MULI GFS Jeudi 14 mai 15Z">
+    <div class="map-cap">Fig. 3 — MUCAPE max 1225 J/kg · MULI −5,1 K · Côte-d'Or 300–600 J/kg (vert-jaune) · Maximum SE sur Alpes du Sud · Run 12Z 13/05 · Source : Keraunos</div>
+  </div>
+
+  <div class="sub-title">GFS 12Z — Cisaillement 0–6 km à 15Z : convection organisée possible</div>
+  <p class="atxt">Le cisaillement vertical de vent 0–6 km atteint <strong>37,5 m/s</strong> en valeur maximale sur le run, concentré sur l'axe Languedoc / Roussillon / Marseille (zone rouge-orange, >33 m/s). Sur la Côte-d'Or, la carte montre des valeurs de <strong>22 à 26 m/s</strong> (zone orange clair), accompagnées de précipitations (>1 mm/h). Ce niveau de cisaillement, combiné à un MUCAPE de 300–600 J/kg, est suffisant pour organiser des <strong>multicellules structurées</strong> capables de produire du grésil et des rafales descendantes significatives. Il ne s'agit pas d'un environnement supercellulaire classique, mais la convection de masse d'air froid peut être localement intense et rapide.</p>
+
+  <div class="map-block">
+    <div class="map-hdr"><span class="map-model">GFS HiRes 0.25° 12Z · Keraunos</span><span class="map-ech">Jeu. 14 mai 2026 · 15Z · Cisaillements 0–6 km</span></div>
+    <img src="images/2026_05_14/CIS_0-6_KM_27.png" alt="CIS 0-6 km GFS Jeudi 14 mai 15Z">
+    <div class="map-cap">Fig. 4 — CIS 0–6 km · Max 37,5 m/s · Côte-d'Or ~22–26 m/s (orange) · Précip. >1mm/h · Multicellules structurées possibles · Run 12Z 13/05 · Source : Keraunos</div>
+  </div>
+
+  <div class="sub-title">GFS 12Z — Température 850 hPa à 09Z : masse d'air froid quantifiée</div>
+  <p class="atxt">La carte de température à 850 hPa jeudi à 09Z confirme l'ampleur de la masse d'air froid. Sur la Côte-d'Or, la T850 est proche de <strong>0°C</strong> (teinte cyan-bleu pâle) avec un vent d'ouest-nord-ouest rapide (barbules serrées). Le gradient thermique est très marqué : ~−2 à 0°C sur le nord de la France, tandis que la zone alpine du sud présente déjà des résidus de chaleur méditerranéenne (+8 à +10°C sur la Côte d'Azur). Cette T850 à 0°C sur la Côte-d'Or explique directement la neige attendue dès <strong>1200m sur le Jura</strong> et la possibilité de <strong>grésil/neige roulée</strong> dans les averses les plus intenses en plaine.</p>
+
+  <div class="maps-duo">
+    <div class="map-block">
+      <div class="map-hdr"><span class="map-model">GFS HiRes 0.25° 12Z · Keraunos</span><span class="map-ech">Jeu. 14 mai 2026 · 09Z · T850 hPa + Vent</span></div>
+      <img src="images/2026_05_14/TEMPERATURE_850HPA_21.png" alt="T850 GFS Jeudi 14 mai 09Z">
+      <div class="map-cap">Fig. 5 — T850 hPa (°C) · ~0°C sur Côte-d'Or (cyan) · Flux WNW rapide · Max 10,1°C Méditerranée · Run 12Z 13/05 · Source : Keraunos</div>
+    </div>
+    <div class="map-block">
+      <div class="map-hdr"><span class="map-model-arome">AROME 15Z · Météo-France · Meteociel</span><span class="map-ech">Jeu. 14 mai 2026 · 11h locale (+18h) · T850 hPa + Géop.</span></div>
+      <img src="images/2026_05_14/arome-16-18-0.png" alt="AROME T850 Jeudi 14 mai 11h">
+      <div class="map-cap">Fig. 6 — T850 hPa AROME · ~0°C Côte-d'Or · Géopotentiel 136–138 dam · Flux WNW confirmé · Run 15Z 13/05 · Source : Meteociel/Météo-France</div>
+    </div>
+  </div>
+
+  <div class="sub-title">AROME 15Z — Températures et précipitations à 07h locales</div>
+  <p class="atxt">Le modèle AROME 15Z représente à 07h locales un champ de température de surface déjà très frais pour un mois de mai : <strong>8–10°C sur la Côte-d'Or</strong> (teintes vert-jaune clair sur la carte AROME). Le contraste est saisissant avec la carte de précipitations simultanée : des lignes d'averses organisées en trainées parallèles orientées NW-SE remontent sur la France depuis l'Atlantique. Sur la Côte-d'Or, les averses du matin affichent des intensités de <strong>2 à 4 mm/h</strong> (teintes vert-cyan). L'axe le plus actif se concentre sur les Alpes du Nord / Savoie (vert-jaune, 6–10 mm/h). Les hachures oranges sur les reliefs alpins signalent un risque de grésil/neige roulée à partir des altitudes moyennes, cohérent avec les limites annoncées par Météo-France.</p>
+
+  <div class="maps-duo">
+    <div class="map-block">
+      <div class="map-hdr"><span class="map-model-arome">AROME 1.3km 15Z · Météo-France</span><span class="map-ech">Jeu. 14 mai 2026 · 07h locale (+14h) · Température 2m</span></div>
+      <img src="images/2026_05_14/aromehd-0-14-0.png" alt="AROME T2m Jeudi 14 mai 07h">
+      <div class="map-cap">Fig. 7 — T2m (°C) · 8–10°C Côte-d'Or (vert) · Taches bleues Alpes (gel) · T jusqu'à 40°C Afrique du Nord (contraste) · Source : Meteociel/Météo-France</div>
+    </div>
+    <div class="map-block">
+      <div class="map-hdr"><span class="map-model-arome">AROME 1.3km 15Z · Météo-France</span><span class="map-ech">Jeu. 14 mai 2026 · 07h locale (+14h) · Précipitations 1h</span></div>
+      <img src="images/2026_05_14/aromehd-1-14-0.png" alt="AROME précipitations Jeudi 14 mai 07h">
+      <div class="map-cap">Fig. 8 — Précip. horaires (mm) · Averses 2–4 mm/h Côte-d'Or · Trainées NW-SE · Hachures orange = grésil/neige roulée sur reliefs · Source : Meteociel/Météo-France</div>
+    </div>
+  </div>
+
+  <div class="sub-title">ESTOFEX — Carte officielle des niveaux de risque</div>
+  <p class="atxt">La carte ESTOFEX, émise le mardi 12 mai à 19:55 UTC et valable pour la journée du jeudi 14 mai, classe la Côte-d'Or dans la <strong>zone lightning générale (jaune, >15% de probabilité de foudre)</strong>. Les zones de niveau 1 et 2 sont respectivement sur le nord de l'Espagne/Pyrénées et sur le NW de l'Italie, correspondant aux zones où la masse d'air maritime méditerranéenne est la plus énergétique. L'analyse d'ESTOFEX souligne que la convection sera de type <strong>"agile"</strong> (convection rapide, peu profonde, caractéristique de la traîne froide) sur la France, sans potentiel de phénomènes très sévères à notre latitude.</p>
+
+  <div class="map-block">
+    <div class="map-hdr"><span class="bul-logo-estofex" style="font-family:var(--mono);font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.08em">⛈ ESTOFEX</span><span class="map-ech">Jeu. 14/05 06Z → Ven. 15/05 06Z · Extended Forecast · Forecaster : TUSCHY</span></div>
+    <img src="images/2026_05_14/ESTOFEX.png" alt="ESTOFEX carte niveaux de risque">
+    <div class="map-cap">Fig. 9 — Zone lightning (jaune) : France entière incluse · Niveau 2 (rouge) : NW Italie · Niveau 1 (orange) : N Espagne + N Italie · Côte-d'Or = zone lightning uniquement · Source : ESTOFEX / estofex.org</div>
+  </div>
+
+  <p class="atxt"><strong>Synthèse Jour J :</strong> Journée de traîne froide généralisée sur la Côte-d'Or. Matin pluvieux avec averses modérées (2–4 mm/h). Après-midi : intensification des averses avec <strong>caractère orageux probable et grésil</strong> sur le quart nord-est (dont la Côte-d'Or). Le cisaillement 0–6 km à 22–26 m/s permet des cellules multicellulaires structurées. Température maximale 11–14°C — nettement en dessous des normales de saison (normalement ~18–20°C mi-mai). Vent d'ouest sensible avec rafales 40–50 km/h. Pas de phénomène sévère majeur attendu, mais <strong>grésil possible</strong> en plaine lors des averses les plus actives.</p>
+</div>
+
+<!-- SECTION 02 : VENDREDI 15 MAI -->
+<div class="section">
+  <div class="sec-hdr">
+    <span class="sec-num">02 /</span>
+    <span class="sec-title">Vendredi 15 mai — Transition vers l'accalmie</span>
+    <span class="sec-date">J+1 · Fiabilité : Très bonne</span>
+  </div>
+  <div class="rb rb-teal">↓ Risque : Résiduel — Décroissance rapide de l'instabilité | Fiabilité : Très bonne</div>
+
+  <div class="pg">
+    <div class="pc"><div class="pc-l">MUCAPE max run</div><div class="pc-v vt">534<span class="pc-u">J/kg</span></div><div class="pc-s">Chute vs 1225 J/kg jeudi</div></div>
+    <div class="pc"><div class="pc-l">MULI</div><div class="pc-v vt">−1,2<span class="pc-u">K</span></div><div class="pc-s">Instabilité faible</div></div>
+    <div class="pc"><div class="pc-l">T2m nuit (03Z)</div><div class="pc-v vb">4–6<span class="pc-u">°C</span></div><div class="pc-s">Nuit froide · C.-d'Or</div></div>
+    <div class="pc"><div class="pc-l">T850 hPa (09Z)</div><div class="pc-v vt">~0/+1<span class="pc-u">°C</span></div><div class="pc-s">Légère remontée</div></div>
+    <div class="pc"><div class="pc-l">CIS 0–1 km Sam. 16</div><div class="pc-v vg">~0–6<span class="pc-u">m/s</span></div><div class="pc-s">Quasi nul C.-d'Or</div></div>
+  </div>
+
+  <p class="atxt">Le vendredi 15 mai marque une transition nette vers l'accalmie. La MUCAPE chute à <strong>534 J/kg</strong> maximum (contre 1225 J/kg la veille) et le MULI remonte à <strong>−1,2 K</strong> seulement — instabilité très faible, sans capacité à produire des orages organisés. Sur la Côte-d'Or, les valeurs sont quasi nulles (<50 J/kg sur le département, teintes gris pâle). La convection résiduelle se concentre sur le pourtour méditerranéen et le grand sud-est.</p>
+  <p class="atxt">La nuit de jeudi à vendredi est particulièrement froide : le GFS affiche <strong>4 à 6°C à 2m</strong> sur la Côte-d'Or à 03Z (teintes gris-bleu sur la carte de température), avec des valeurs descendant à <2°C sur les reliefs de l'est. La T850 hPa remonte légèrement à ~0/+1°C le vendredi matin (Fig. 10), mais reste très en dessous des normales. Le cisaillement basse couche 0–1 km tombe à des valeurs quasi nulles sur la Côte-d'Or dès le samedi 16 mai à 03Z, confirmant la fin du régime convectif actif.</p>
+
+  <div class="maps-duo">
+    <div class="map-block">
+      <div class="map-hdr"><span class="map-model">GFS HiRes 0.25° 12Z · Keraunos</span><span class="map-ech">Ven. 15 mai 2026 · 15Z · MUCAPE/MULI</span></div>
+      <img src="images/2026_05_14/MUCAPE_MULI_51.png" alt="MUCAPE MULI GFS Vendredi 15 mai 15Z">
+      <div class="map-cap">Fig. 10 — MUCAPE max 534 J/kg · MULI −1,2 K · Côte-d'Or quasi nulle · Résidus SE uniquement · Run 12Z 13/05 · Source : Keraunos</div>
+    </div>
+    <div class="map-block">
+      <div class="map-hdr"><span class="map-model">GFS HiRes 0.25° 12Z · Keraunos</span><span class="map-ech">Ven. 15 mai 2026 · 03Z · Température 2m</span></div>
+      <img src="images/2026_05_14/TEMPERATURE_2M_GRID_39.png" alt="Température 2m GFS Vendredi 15 mai 03Z">
+      <div class="map-cap">Fig. 11 — T2m nuit de Jeu→Ven · 4–6°C Côte-d'Or · <2°C reliefs est · Max 17°C Méditerranée · Nuit froide généralisée · Run 12Z 13/05 · Source : Keraunos</div>
+    </div>
+  </div>
+
+  <div class="maps-duo">
+    <div class="map-block">
+      <div class="map-hdr"><span class="map-model">GFS HiRes 0.25° 12Z · Keraunos</span><span class="map-ech">Ven. 15 mai 2026 · 09Z · T850 hPa + Vent</span></div>
+      <img src="images/2026_05_14/TEMPERATURE_850HPA_45.png" alt="T850 GFS Vendredi 15 mai 09Z">
+      <div class="map-cap">Fig. 12 — T850 hPa · ~0/+1°C Côte-d'Or · Légère remontée thermique · Max 7,3°C Méditerranée · Run 12Z 13/05 · Source : Keraunos</div>
+    </div>
+    <div class="map-block">
+      <div class="map-hdr"><span class="map-model-ecmwf">ECMWF 0.25° 12Z · Meteociel</span><span class="map-ech">Ven. 15 mai 2026 · 08h locale (+42h) · T850 hPa</span></div>
+      <img src="images/2026_05_14/ecmwffr-1-42.png" alt="ECMWF T850 Vendredi 15 mai 08h">
+      <div class="map-cap">Fig. 13 — T850 hPa ECMWF · −1 à 0°C Côte-d'Or (cyan) · Masse d'air froid encore présente · Run 12Z 13/05 · Source : Meteociel/ECMWF</div>
+    </div>
+  </div>
+
+  <p class="atxt"><strong>Synthèse Ven. 15 mai :</strong> Nette décroissance de l'instabilité. Quelques averses résiduelles possibles en journée, sans caractère orageux marqué. Températures encore fraîches (max 12–15°C). Nuit froide (4–6°C). ECMWF et GFS convergent sur l'accalmie convective.</p>
+</div>
+
+<!-- SECTION 03 : SAMEDI–DIMANCHE -->
+<div class="section">
+  <div class="sec-hdr">
+    <span class="sec-num">03 /</span>
+    <span class="sec-title">Samedi–Dimanche 16–17 mai — Fin du régime perturbé</span>
+    <span class="sec-date">J+2 / J+3 · Fiabilité : Bonne</span>
+  </div>
+  <div class="rb rb-ok">✓ Risque : Négligeable sur Côte-d'Or · Source Keraunos</div>
+
+  <div class="pg">
+    <div class="pc"><div class="pc-l">CIS 0–1 km Sam. 16 / 03Z</div><div class="pc-v vg">~0–6<span class="pc-u">m/s</span></div><div class="pc-s">Quasi nul C.-d'Or · Résidus SE</div></div>
+    <div class="pc"><div class="pc-l">Activité convective</div><div class="pc-v vg" style="font-size:13px">SE + Corse</div><div class="pc-s">Côte-d'Or épargnée</div></div>
+    <div class="pc"><div class="pc-l">Dimanche 17</div><div class="pc-v vg" style="font-size:13px">Océanique</div><div class="pc-s">Aucun risque convectif (Keraunos)</div></div>
+  </div>
+
+  <p class="atxt">Selon Keraunos, le <strong>samedi 16 mai</strong>, le thalweg d'altitude évacue le pays par l'est. Les résidus convectifs se cantonnent à <strong>l'extrême sud-est et à la Corse</strong>. La Côte-d'Or est totalement épargnée. La carte de cisaillement basse couche 0–1 km au samedi 16 mai à 03Z confirme ce diagnostic : les zones actives (orange-rouge, >12 m/s) sont confinées au Languedoc et à la région PACA, avec des valeurs quasi nulles sur la Bourgogne.</p>
+  <p class="atxt">Le <strong>dimanche 17 mai</strong>, l'air froid en altitude s'évacue définitivement au profit d'une <strong>circulation plus océanique</strong>. Keraunos est explicite : « il n'est pas identifié de risque convectif significatif ». C'est la fin de la séquence perturbée qui a animé la Côte-d'Or depuis le 5 mai, soit plus de 12 jours consécutifs de situations pluvio-orageuses.</p>
+
+  <div class="map-block">
+    <div class="map-hdr"><span class="map-model">GFS HiRes 0.25° 12Z · Keraunos</span><span class="map-ech">Sam. 16 mai 2026 · 03Z · CIS 0–1 km</span></div>
+    <img src="images/2026_05_14/CIS_0-1_KM_63.png" alt="CIS 0-1 km GFS Samedi 16 mai 03Z">
+    <div class="map-cap">Fig. 14 — CIS 0–1 km · Max 16,9 m/s confiné au Languedoc/PACA · Côte-d'Or quasi nulle · Résidus SE uniquement · Run 12Z 13/05 · Source : Keraunos</div>
+  </div>
+</div>
+
+<!-- TABLEAU RECAP -->
+<div class="section">
+  <div class="sec-hdr">
+    <span class="sec-num">04 /</span>
+    <span class="sec-title">Tableau récapitulatif · 14–17 mai 2026</span>
+  </div>
+  <div class="tbl-wrap">
+    <table class="rtable">
+      <thead><tr>
+        <th>Date</th><th>Éch.</th><th>MUCAPE C.-d'Or</th><th>MULI</th><th>T850 hPa</th><th>CIS 0–6km</th><th>Risque Côte-d'Or</th><th>Fiabilité</th>
+      </tr></thead>
+      <tbody>
+        <tr style="background:rgba(249,115,22,.02)">
+          <td style="font-weight:700;color:var(--orange)">Jeu. 14 mai</td>
+          <td style="font-family:var(--mono);font-size:10px;color:var(--orange)">J ✓</td>
+          <td style="font-family:var(--mono);color:var(--amber)">300–600 J/kg</td>
+          <td style="font-family:var(--mono);color:var(--orange);font-weight:600">−5,1 K (!)</td>
+          <td style="font-family:var(--mono);color:var(--blue)">~0 °C</td>
+          <td style="font-family:var(--mono);color:var(--amber)">22–26 m/s</td>
+          <td><span class="td-r td-high">Averses org. · Grésil</span></td>
+          <td style="font-family:var(--mono);font-size:10px;color:var(--green)">Excellente ✓✓</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;color:var(--text)">Ven. 15 mai</td>
+          <td style="font-family:var(--mono);font-size:10px;color:var(--teal)">J+1</td>
+          <td style="font-family:var(--mono);color:var(--teal)">< 50 J/kg</td>
+          <td style="font-family:var(--mono);color:var(--teal)">−1,2 K</td>
+          <td style="font-family:var(--mono);color:var(--teal)">0/+1 °C</td>
+          <td style="color:var(--text-muted);font-size:12px">—</td>
+          <td><span class="td-r td-ten">Résiduel · Accalmie</span></td>
+          <td style="font-family:var(--mono);font-size:10px;color:var(--green)">Très bonne ✓</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;color:var(--text)">Sam. 16 mai</td>
+          <td style="font-family:var(--mono);font-size:10px;color:var(--green)">J+2</td>
+          <td style="font-family:var(--mono);color:var(--green)">Nul</td>
+          <td style="color:var(--text-muted);font-size:12px">—</td>
+          <td style="color:var(--text-muted);font-size:12px">—</td>
+          <td style="font-family:var(--mono);color:var(--green)">~0 m/s</td>
+          <td><span class="td-r td-ok">Calme · SE/Corse seulement</span></td>
+          <td style="font-family:var(--mono);font-size:10px;color:var(--green)">Bonne ✓</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;color:var(--text)">Dim. 17 mai</td>
+          <td style="font-family:var(--mono);font-size:10px;color:var(--green)">J+3</td>
+          <td style="font-family:var(--mono);color:var(--green)">Nul</td>
+          <td style="color:var(--text-muted);font-size:12px">—</td>
+          <td style="color:var(--text-muted);font-size:12px">—</td>
+          <td style="color:var(--text-muted);font-size:12px">—</td>
+          <td><span class="td-r td-ok">Aucun risque · Keraunos</span></td>
+          <td style="font-family:var(--mono);font-size:10px;color:var(--green)">Bonne ✓</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert al-green" style="margin-top:8px">
+    <div class="alert-icon">✅</div>
+    <div class="alert-text"><strong>Fin de la séquence perturbée — Keraunos confirme</strong>
+      Après 12+ jours de situations pluvio-orageuses successives (5–16 mai), la séquence se termine par un retour à une circulation océanique dès le dimanche 17 mai. Aucun risque convectif significatif identifié pour la semaine suivante à ce stade.
+    </div>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div class="section">
+  <div class="sec-hdr">
+    <span class="sec-num">05 /</span>
+    <span class="sec-title">Sources officielles</span>
+  </div>
+  <div class="src-grid">
+    <div class="src-card"><div class="src-icon">⚡</div><div><div class="src-name">Keraunos S.A.S.</div><div class="src-desc">Bulletin J+1→J+6 du 13/05/2026 · Cartes GFS 12Z (MUCAPE/MULI, CIS 0–1 et 0–6 km, T850, T2m) · Observatoire Français des Tornades et Orages Violents<br><strong style="color:var(--cyan)">keraunos.org</strong></div></div></div>
+    <div class="src-card"><div class="src-icon">🇫🇷</div><div><div class="src-name">Météo-France</div><div class="src-desc">Prévision nationale Jeudi 14 mai 2026 · Giboulées, grésil, neige sur reliefs, températures fraîches, vent O 50 km/h<br><strong style="color:var(--cyan)">meteofrance.fr</strong></div></div></div>
+    <div class="src-card"><div class="src-icon">⛈</div><div><div class="src-name">ESTOFEX</div><div class="src-desc">Extended Forecast Jeu 14→Ven 15 mai · Zone lightning France · Niveaux 1–2 sur Méditerranée · Forecaster TUSCHY · Émis 12/05 19:55 UTC<br><strong style="color:var(--cyan)">estofex.org</strong></div></div></div>
+    <div class="src-card"><div class="src-icon">🌍</div><div><div class="src-name">ECMWF · Meteociel</div><div class="src-desc">Run 0.25° 12Z du 13/05/2026 · Cartes Z500/Pression sol et T850 hPa · Centre Européen pour les Prévisions Météo à Moyen Terme<br><strong style="color:var(--cyan)">ecmwf.int · meteociel.fr</strong></div></div></div>
+    <div class="src-card"><div class="src-icon">🌐</div><div><div class="src-name">Météociel — AROME 15Z</div><div class="src-desc">Run AROME 1.3km 15Z du 13/05/2026 · Cartes T2m, T850 hPa, Précipitations 1h<br><strong style="color:var(--cyan)">meteociel.fr</strong></div></div></div>
+    <div class="src-card"><div class="src-icon">🛰</div><div><div class="src-name">NCEP/NOAA — GFS</div><div class="src-desc">National Centers for Environmental Prediction (USA) · Opérateur du modèle GFS HiRes 0.25° Run 12Z 13/05/2026<br><strong style="color:var(--cyan)">ncep.noaa.gov</strong></div></div></div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-l">Bulletin du 13/05/2026 · GFS 12Z + ECMWF 12Z + AROME 15Z + Keraunos J+1→J+6 + ESTOFEX + Météo-France · Toute décision de sécurité s'appuie sur les bulletins officiels Météo-France</div>
+  <div class="ft-r">GFS HiRes 0.25° Run 13/05/2026 12Z<br>AROME 1.3km Run 13/05/2026 15Z · ECMWF 12Z<br>Côte-d'Or (21) · 47°N / 4–5°E</div>
+</footer>
+
+</div>
+</body>
+</html>
